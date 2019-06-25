@@ -1,0 +1,2 @@
+url = https://api.trello.com
+serviceUrl = /1/boards/5d09e69bd98d74398820c46b?actions=all&boardStars=none&cards=none&card_pluginData=false&checklists=none&customFields=false&fields=name%2Cdesc%2CdescData%2Cclosed%2CidOrganization%2Cpinned%2Curl%2CshortUrl%2Cprefs%2ClabelNames&lists=open&members=none&memberships=none&membersInvited=none&membersInvited_fields=all&pluginData=false&organization=false&organization_pluginData=false&myPrefs=false&tags=false&key=f9f57185a82caa431905f7e39bb8814f&token=8917ac8db2a2614344847c9240b5879b0ed0586d4cea2a37b6673ad9f01c096e

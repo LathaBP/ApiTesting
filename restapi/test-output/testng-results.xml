@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" total="3" passed="3">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Default suite" duration-ms="5898" started-at="2019-06-24T11:53:20Z" finished-at="2019-06-24T11:53:26Z">
+    <groups>
+    </groups>
+    <test name="Default test" duration-ms="5898" started-at="2019-06-24T11:53:20Z" finished-at="2019-06-24T11:53:26Z">
+      <class name="com.qa.tests.GetApiTest">
+        <test-method status="PASS" signature="setUp()[pri:0, instance:com.qa.tests.GetApiTest@573f2bb1]" name="setUp" is-config="true" duration-ms="6" started-at="2019-06-24T17:23:20Z" finished-at="2019-06-24T17:23:20Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method status="PASS" signature="postBoard()[pri:0, instance:com.qa.tests.GetApiTest@573f2bb1]" name="postBoard" duration-ms="2512" started-at="2019-06-24T17:23:20Z" finished-at="2019-06-24T17:23:23Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- postBoard -->
+        <test-method status="PASS" signature="setUp()[pri:0, instance:com.qa.tests.GetApiTest@573f2bb1]" name="setUp" is-config="true" duration-ms="1" started-at="2019-06-24T17:23:23Z" finished-at="2019-06-24T17:23:23Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method status="PASS" signature="getAPITestWithoutHeaders()[pri:0, instance:com.qa.tests.GetApiTest@573f2bb1]" name="getAPITestWithoutHeaders" duration-ms="533" started-at="2019-06-24T17:23:23Z" finished-at="2019-06-24T17:23:23Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getAPITestWithoutHeaders -->
+        <test-method status="PASS" signature="setUp()[pri:0, instance:com.qa.tests.GetApiTest@573f2bb1]" name="setUp" is-config="true" duration-ms="1" started-at="2019-06-24T17:23:23Z" finished-at="2019-06-24T17:23:23Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method status="PASS" signature="AddLableToCard()[pri:0, instance:com.qa.tests.GetApiTest@573f2bb1]" name="AddLableToCard" duration-ms="2818" started-at="2019-06-24T17:23:23Z" finished-at="2019-06-24T17:23:26Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- AddLableToCard -->
+      </class> <!-- com.qa.tests.GetApiTest -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>

@@ -1,0 +1,143 @@
+package com.qa.client;
+
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONObject;
+
+import com.qa.utils.TestUtils;
+
+public class RestClient {
+	public String boardId, listId, cardId, labelId;
+
+	// 1. GET Method without Headers:
+	public CloseableHttpResponse getCard(String key, String token)
+			throws ClientProtocolException, IOException, URISyntaxException {
+		CloseableHttpClient httpClient = HttpClients.createDefault();
+		URIBuilder builder = new URIBuilder();
+		builder.setScheme("https").setHost("api.trello.com/1").setPath("/cards/" + "5d10b1b17a497267967055eb").setParameter("key", key)
+				.setParameter("token", token);
+		URI uri = builder.build();
+		System.out.println(uri);
+		HttpGet httpget = new HttpGet(uri);
+		CloseableHttpResponse closebaleHttpResponse = httpClient.execute(httpget);
+		return closebaleHttpResponse;
+
+	}
+
+	// 2.POST BOARDS
+
+	public void postBoard(String key, String token) throws ClientProtocolException, IOException, URISyntaxException {
+		CloseableHttpClient httpClient = HttpClients.createDefault();
+		URIBuilder builder = new URIBuilder();
+		builder.setScheme("https").setHost("api.trello.com/1").setPath("/boards/").setParameter("key", key)
+				.setParameter("token", token).setParameter("name", "QAPITOLQA");
+		URI uri = builder.build();
+		HttpPost httpget = new HttpPost(uri);
+		CloseableHttpResponse closebaleHttpResponse = httpClient.execute(httpget);
+		String responseString = EntityUtils.toString(closebaleHttpResponse.getEntity(), "UTF-8");
+		JSONObject responseJson = new JSONObject(responseString);
+		boardId = TestUtils.getValueByJPath(responseJson, "/id");
+		System.out.println("Board ID is" + " " + boardId);
+
+	}
+
+	// 3.Post List
+
+	public void postList(String key, String token) throws ClientProtocolException, IOException, URISyntaxException {
+		CloseableHttpClient httpClient = HttpClients.createDefault();
+		URIBuilder builder = new URIBuilder();
+		builder.setScheme("https").setHost("api.trello.com/1").setPath("/lists/").setParameter("key", key)
+				.setParameter("token", token).setParameter("name", "List12").setParameter("idBoard", boardId);
+		URI uri = builder.build();
+		HttpPost httpget = new HttpPost(uri);
+		CloseableHttpResponse closebaleHttpResponse = httpClient.execute(httpget);
+		String responseString = EntityUtils.toString(closebaleHttpResponse.getEntity(), "UTF-8");
+		JSONObject responseJson = new JSONObject(responseString);
+		listId = TestUtils.getValueByJPath(responseJson, "/id");
+		System.out.println("List ID is" + " " + listId);
+	}
+
+	// 4.Post Card
+	public CloseableHttpResponse postCard(String key, String token, String name)
+			throws ClientProtocolException, IOException, URISyntaxException {
+		CloseableHttpClient httpClient = HttpClients.createDefault();
+		URIBuilder builder = new URIBuilder();
+		builder.setScheme("https").setHost("api.trello.com/1").setPath("/cards/").setParameter("key", key)
+				.setParameter("token", token).setParameter("name", name).setParameter("idList", listId);
+		URI uri = builder.build();
+		HttpPost httpget = new HttpPost(uri);
+		CloseableHttpResponse closeableHttpResponse = httpClient.execute(httpget);
+		String responseString = EntityUtils.toString(closeableHttpResponse.getEntity(), "UTF-8");
+		JSONObject responseJson = new JSONObject(responseString);
+		cardId = TestUtils.getValueByJPath(responseJson, "/id");
+		System.out.println("card ID is" + " " + cardId);
+		return closeableHttpResponse;
+	}
+	//5.post label
+	public void postLable(String key, String token, String name)
+			throws ClientProtocolException, IOException, URISyntaxException {
+		CloseableHttpClient httpClient = HttpClients.createDefault();
+		URIBuilder builder = new URIBuilder();
+		builder.setScheme("https").setHost("api.trello.com/1").setPath("/labels/").setParameter("key", key)
+				.setParameter("token", token).setParameter("name", name).setParameter("color", "purple").setParameter("idBoard", boardId);
+		URI uri = builder.build();
+		HttpPost httpget = new HttpPost(uri);
+		CloseableHttpResponse closeableHttpResponse = httpClient.execute(httpget);
+		String responseString = EntityUtils.toString(closeableHttpResponse.getEntity(), "UTF-8");
+		JSONObject responseJson = new JSONObject(responseString);
+		labelId = TestUtils.getValueByJPath(responseJson, "/id");
+		System.out.println("Label ID is" + " " + labelId);
+	}
+	public CloseableHttpResponse AddLableToCard(String key, String token)
+			throws ClientProtocolException, IOException, URISyntaxException {
+		CloseableHttpClient httpClient = HttpClients.createDefault();
+		URIBuilder builder = new URIBuilder();
+		//builder.setScheme("https").setHost("api.trello.com/1").setPath("/cards/").setParameter("key", key)
+		//		.setParameter("token", token).setParameter("id",cardId ).setPath("/idLabels?").setParameter("value", labelId);
+		//URI uri = builder.build();
+		URI uri = new URIBuilder("https://api.trello.com/1/cards/" + cardId + "/idLabels?")
+				.addParameter("value", labelId)
+				.addParameter("key", key)
+				.addParameter("token", token)
+				.build();
+		System.out.println(uri);
+		HttpPost httpget = new HttpPost(uri);
+		CloseableHttpResponse closeableHttpResponse = httpClient.execute(httpget);
+		return closeableHttpResponse;
+		
+		//https://api.trello.com/1/cards/5d107dbccc7d2b7c6ac6eff6/idLabels?value=5d108008049a462e9b90d967&key=f9f57185a82caa431905f7e39bb8814f&token=8917ac8db2a2614344847c9240b5879b0ed0586d4cea2a37b6673ad9f01c096e
+		}
+	public CloseableHttpResponse AddAttachmentmentToCard(String key, String token)
+			throws ClientProtocolException, IOException, URISyntaxException {
+		CloseableHttpClient httpClient = HttpClients.createDefault();
+		URIBuilder builder = new URIBuilder();
+		//builder.setScheme("https").setHost("api.trello.com/1").setPath("/cards/").setParameter("key", key)
+		//		.setParameter("token", token).setParameter("id",cardId ).setPath("/idLabels?").setParameter("value", labelId);
+		//URI uri = builder.build();
+		URI uri = new URIBuilder("https://api.trello.com/1/cards/" + cardId + "/attachments?")
+				.addParameter("value", labelId)
+				.addParameter("key", key)
+				.addParameter("token", token)
+				.build();
+		System.out.println(uri);
+		HttpPost httpget = new HttpPost(uri);
+		CloseableHttpResponse closeableHttpResponse = httpClient.execute(httpget);
+		return closeableHttpResponse;
+		
+		//https://api.trello.com/1/cards/5d107dbccc7d2b7c6ac6eff6/idLabels?value=5d108008049a462e9b90d967&key=f9f57185a82caa431905f7e39bb8814f&token=8917ac8db2a2614344847c9240b5879b0ed0586d4cea2a37b6673ad9f01c096e
+		}
+	
+}
